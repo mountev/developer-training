@@ -9,8 +9,8 @@ class CRM_Training_Form_Setting extends CRM_Core_Form {
    * @access public
    */
   public function buildQuickForm() {
-    $this->addElement('checkbox', 'display_membership', ts('Display membership details on summary screen?'));
-    $this->addElement('checkbox', 'display_contribution_total', ts('Display contribution totals on summary screen?'));
+    $this->addElement('checkbox', 'display_membership', ts('Membership details on summary screen?'));
+    $this->addElement('checkbox', 'display_contribution_total', ts('Contribution totals on summary screen?'));
     
     // Create the Submit Button.
     $buttons = array(
@@ -30,7 +30,12 @@ class CRM_Training_Form_Setting extends CRM_Core_Form {
 
   public function setDefaultValues() {
     $defaults = array();
-    
+
+    $sql = "SELECT * FROM civicrm_training_settings";
+    $dao = CRM_Core_DAO::executeQuery($sql);
+    while ($dao->fetch()) {
+      $defaults[$dao->name] = $dao->value;
+    }
     return $defaults;
   }
 
@@ -43,7 +48,15 @@ class CRM_Training_Form_Setting extends CRM_Core_Form {
    */
   public function postProcess() {
     $params = $this->controller->exportValues($this->_name);    
-      
-    CRM_Core_Session::setStatus($message);
+
+    $sql = "INSERT into civicrm_training_settings (name, value) VALUES (%1, %2), (%3, %4) ON DUPLICATE KEY UPDATE value = VALUES(value)";
+    $sparams = array(
+      1 => array('display_membership', 'String'),
+      2 => array((int) CRM_Utils_Array::value('display_membership', $params), 'Integer'),
+      3 => array('display_contribution_total', 'String'),
+      4 => array((int) CRM_Utils_Array::value('display_contribution_total', $params), 'Integer')
+    ); 
+    CRM_Core_DAO::executeQuery($sql, $sparams);
+    CRM_Core_Session::setStatus(ts('Training settings saved.'));
   }
 }
