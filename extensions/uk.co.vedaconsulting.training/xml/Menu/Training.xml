@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<menu>
+  <item>
+    <path>civicrm/training/settings</path>
+    <page_callback>CRM_Training_Form_Setting</page_callback>
+    <title>Training Settings</title>
+    <access_arguments>administer CiviCRM</access_arguments>
+  </item>
+</menu>
