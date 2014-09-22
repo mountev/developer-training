@@ -118,70 +118,88 @@ function training_civicrm_summary( $contactID, &$content, &$contentPlacement = C
 
   $contributionContent = $membershipContent = '';
 
-  // Get Contributions
-  $result = civicrm_api3('Contribution', 'get', array(
-    'contact_id' => $contactID,
-  ));
+  // Check whether we need to display Contribution summary
+  $cSql = "SELECT value FROM civicrm_training_settings WHERE name = %1 AND value = %2";
+  $cDao = CRM_Core_DAO::executeQuery($cSql, array(
+                                          '1' => array('display_contribution_total' ,'String'),
+                                          '2' => array(1 ,'Integer')
+                                          ));
+  if ($cDao->fetch()) {
 
-  $total = 0;
-  foreach ($result['values'] as $key => $value)  {
-    $total += $value['total_amount'];
-  }
+    // Get Contributions
+    $result = civicrm_api3('Contribution', 'get', array(
+      'contact_id' => $contactID,
+    ));
 
-  if ($total > 0) {
-    $total = CRM_Utils_Money::format($total);
-    $contributionContent = <<<EOT
-      <div id="custom-contributions">
-      <h3>Contribution Summary</h3>
-      <div class="crm-summary-row">
-        <div class="crm-label">Total</div>
-        <div class="crm-content crm-contact-contribution_summary">{$total}</div>
-      </div>
-    </div>
-EOT;
-  }
-
-  // Get Memberships
-  $result = civicrm_api3('Membership', 'get', array(
-    'contact_id' => $contactID,
-  ));
-
-  if (!empty($result['values'])) {
-
-    $rows = "";
-
-    foreach ($result['values'] as $key => $value) {
-      // Get Membership Status label
-      $statusResult = civicrm_api3('MembershipStatus', 'getsingle', array(
-        'id' => $value['status_id'],
-      ));
-
-      $rows .= "<tr>
-                  <td>{$value['membership_name']}</td>
-                  <td>".CRM_Utils_Date::customFormat($value['join_date'])."</td>
-                  <td>".CRM_Utils_Date::customFormat($value['start_date'])."</td>
-                  <td>".CRM_Utils_Date::customFormat($value['end_date'])."</td>
-                  <td>".$statusResult['label']."</td>
-                </tr>";
+    $total = 0;
+    foreach ($result['values'] as $key => $value)  {
+      $total += $value['total_amount'];
     }
 
-    $membershipContent = <<<EOT
-      <div id="custom-memberships">
-        <h3>Memberships</h3>
-        <table class="selector row-highlight">
-        <thead class="sticky">
-            <th scope="col">Membership</th>
-            <th scope="col">Member Since</th>
-            <th scope="col">Start Date</th>
-            <th scope="col">End Date</th>
-            <th scope="col">Status</th>
-        </thead>
-        <tbody>
-          {$rows}
-        </tbody>
-        </table>
+    if ($total > 0) {
+      $total = CRM_Utils_Money::format($total);
+      $contributionContent = <<<EOT
+        <div id="custom-contributions">
+        <h3>Contribution Summary</h3>
+        <div class="crm-summary-row">
+          <div class="crm-label">Total</div>
+          <div class="crm-content crm-contact-contribution_summary">{$total}</div>
+        </div>
       </div>
 EOT;
+    }
+  }
+
+  // Check whether we need to display membership information
+  $mSql = "SELECT * FROM civicrm_training_settings WHERE name = %1 AND value = %2";
+  $mDao = CRM_Core_DAO::executeQuery($mSql, array(
+                                              '1' => array('display_membership' ,'String'),
+                                              '2' => array(1 ,'Integer')
+                                              ));
+  if ($mDao->fetch()) {
+
+    // Get Memberships
+    $result = civicrm_api3('Membership', 'get', array(
+      'contact_id' => $contactID,
+    ));
+
+    if (!empty($result['values'])) {
+
+      $rows = "";
+
+      foreach ($result['values'] as $key => $value) {
+        // Get Membership Status label
+        $statusResult = civicrm_api3('MembershipStatus', 'getsingle', array(
+          'id' => $value['status_id'],
+        ));
+
+        $rows .= "<tr>
+                    <td>{$value['membership_name']}</td>
+                    <td>".CRM_Utils_Date::customFormat($value['join_date'])."</td>
+                    <td>".CRM_Utils_Date::customFormat($value['start_date'])."</td>
+                    <td>".CRM_Utils_Date::customFormat($value['end_date'])."</td>
+                    <td>".$statusResult['label']."</td>
+                  </tr>";
+      }
+
+      $membershipContent = <<<EOT
+        <div id="custom-memberships">
+          <h3>Memberships</h3>
+          <table class="selector row-highlight">
+          <thead class="sticky">
+              <th scope="col">Membership</th>
+              <th scope="col">Member Since</th>
+              <th scope="col">Start Date</th>
+              <th scope="col">End Date</th>
+              <th scope="col">Status</th>
+          </thead>
+          <tbody>
+            {$rows}
+          </tbody>
+          </table>
+        </div>
+EOT;
+    }
   }
 
   $content = $contributionContent.$membershipContent;
