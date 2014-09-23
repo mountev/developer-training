@@ -84,10 +84,10 @@
             </tr>
             </thead>
             {foreach from=$activeMembers item=activeMember}
-						
-						{* Get membership details and custom data *}
-						{crmAPI var='result' entity='Membership' action='getsingle' sequential=1 id=$activeMember.id}
-						
+
+			{* Get membership details and custom data *}
+			{crmAPI var='result' entity='Membership' action='getsingle' sequential=1 id=$activeMember.id}
+
             <tr id="crm-membership_{$activeMember.id}" class="{cycle values="odd-row,even-row"} {$activeMember.class} crm-membership">
                 <td class="crm-membership-membership_type">
                     {$activeMember.membership_type}
@@ -100,9 +100,9 @@
                 <td class="crm-membership-source">{$activeMember.source}</td>
                 <!--<td class="crm-membership-auto_renew">{if $activeMember.auto_renew}<img src="{$config->resourceBase}i/check.gif" alt="{ts}Auto-renew{/ts}" /> {/if}</td>
                 <td class="crm-membership-related_count">{$activeMember.related_count}</td>-->
-								<td>{$result.custom_9}</td>
-								<td>{$result.custom_11}</td>
-								<td>
+				<td>{$result.custom_9}</td>
+				<td>{$result.custom_11}</td>
+				<td>
                     {$activeMember.action|replace:'xx':$activeMember.id}
                     {if $activeMember.owner_membership_id}
                       <a href="{crmURL p='civicrm/membership/view' q="reset=1&id=`$activeMember.owner_membership_id`&action=view&context=membership&selectedChild=member"}" title="{ts}View Primary member record{/ts}" class="action-item">{ts}View Primary{/ts}</a>
