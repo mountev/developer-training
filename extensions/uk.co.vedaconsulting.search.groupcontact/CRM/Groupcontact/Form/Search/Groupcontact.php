@@ -18,9 +18,9 @@ class CRM_Groupcontact_Form_Search_Groupcontact extends CRM_Contact_Form_Search_
     CRM_Utils_System::setTitle(ts('Custom Search Group Contact'));
     $aElements = array();
 
-    #get all groups 
+    #get all groups
     $aGroups  = CRM_Core_PseudoConstant::group();
-    
+
     $form->addElement('advmultiselect', 'group_contact',
       ts('Group(s)') . ' ', $aGroups,
       array(
@@ -31,21 +31,22 @@ class CRM_Groupcontact_Form_Search_Groupcontact extends CRM_Contact_Form_Search_
     );
     #assign to element
     $aElements[] = 'group_contact';
-    
-    #date range 
+
+    #date range
     $form->addDate('start_date', 'From :', FALSE, array('formatType' => 'searchDate'));
     $form->addDate('end_date', 'To :', FALSE, array('formatType' => 'searchDate'));
-    
+
     $aElements[] = 'start_date';
     $aElements[] = 'end_date';
-    
-    
+
     #to get all status
-    $oGroupContact  = new CRM_Contact_DAO_GroupContact;
+    /*$oGroupContact  = new CRM_Contact_DAO_GroupContact;
     $aGroupFields   = $oGroupContact->fields();
     $sStatus        = $aGroupFields['status']['enumValues'];
-    $aStatus        = explode(', ', $sStatus);
-    
+    $aStatus        = explode(', ', $sStatus);*/
+
+    $aStatus = CRM_Core_SelectValues::groupContactStatus();
+
     foreach( $aStatus as $status ){
       //$form->addElement('checkbox',  "status[{$status}]",$status,    '', array('class' => 'group_status'));
       $form->addElement('checkbox', $status,    ts("{$status}"), '', array('class' => 'group_status'));
@@ -104,7 +105,7 @@ class CRM_Groupcontact_Form_Search_Groupcontact extends CRM_Contact_Form_Search_
 //   print_r($sql); die();
     return $sql;
   }
-  
+
   function groupBy(){
     return "Group By contact_a.id";
   }
@@ -160,7 +161,7 @@ class CRM_Groupcontact_Form_Search_Groupcontact extends CRM_Contact_Form_Search_
     $aWhereClause[] = implode(" OR ",$atemp);
     }
     #Group end
-    
+
     #status
     $oGroupContact  = new CRM_Contact_DAO_GroupContact;
     $aGroupFields   = $oGroupContact->fields();
@@ -179,7 +180,7 @@ class CRM_Groupcontact_Form_Search_Groupcontact extends CRM_Contact_Form_Search_
     $aWhereClause[] = implode(" OR ",$temp);
     }
     #Status end
-    
+
     #date range
     $fromDate = $this->_formValues['start_date'] ? date( 'Ymd', strtotime($this->_formValues['start_date']) ) : NULL;
     $toDate   = $this->_formValues['end_date'] ? date( 'Ymd', strtotime($this->_formValues['end_date']) ) : NULL;
@@ -190,7 +191,7 @@ class CRM_Groupcontact_Form_Search_Groupcontact extends CRM_Contact_Form_Search_
       $aWhereClause[] = "history.date <= {$toDate}";
     }
     #end date range
-    
+
     $sWhere = '( 1 )';
     if (!empty($aWhereClause)) {
       $sWhere = implode( ' AND ', $aWhereClause );
