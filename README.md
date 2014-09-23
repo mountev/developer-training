@@ -11,3 +11,8 @@ http://wiki.civicrm.org/confluence/display/CRMDOC/Create+a+Module+Extension
 Test Cases:  
 PHPUnit: http://wiki.civicrm.org/confluence/display/CRM/Setting+up+your+personal+testing+sandbox+HOWTO  
 Webtests: http://wiki.civicrm.org/confluence/display/CRM/Setting+yourself+up+to+work+with+Selenium+tests
+
+PHPUnit example:  
+civix test CRM_Training_MyTest  
+Webtest example:  
+civix test WebTest_Training_MyTest
