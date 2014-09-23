@@ -24,6 +24,7 @@
  +--------------------------------------------------------------------+
 *}
 {* Contact Summary template for new tabbed interface. Replaces Basic.tpl *}
+<h1>Hello</h1>
 {if $action eq 2}
   {include file="CRM/Contact/Form/Contact.tpl"}
 {else}
