@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<extension key="uk.co.vedaconsulting.search.groupcontact" type="module">
+  <file>groupcontact</file>
+  <name>Custom Search Group Contact</name>
+  <description>All Funcitonalities required to do Custom Search for Group Contact</description>
+  <license>AGPL-3.0</license>
+  <maintainer>
+    <author>Solomon Mayer Rajendran</author>
+    <email>solomon@vedaconsulting.co.uk</email>
+  </maintainer>
+  <releaseDate>2014-06-30</releaseDate>
+  <version>1.0</version>
+  <develStage>alpha</develStage>
+  <compatibility>
+    <ver>4.2</ver>
+  </compatibility>
+  <comments>This is a new, undeveloped module</comments>
+  <civix>
+    <namespace>CRM/Groupcontact</namespace>
+  </civix>
+</extension>
