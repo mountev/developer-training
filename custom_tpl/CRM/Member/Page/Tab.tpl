@@ -78,8 +78,8 @@
                 <th>{ts}End Date{/ts}</th>
                 <th>{ts}Status{/ts}</th>
                 <th>{ts}Source{/ts}</th>
-                <th>{ts}Referred{/ts}</th>
-                <th>{ts}Articles{/ts}</th>
+                <th>{ts}Referrer{/ts}</th>
+                <th>{ts}Subscription Articles{/ts}</th>
                 <th></th>
             </tr>
             </thead>
