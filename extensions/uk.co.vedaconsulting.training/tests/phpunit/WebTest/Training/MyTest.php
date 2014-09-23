@@ -31,19 +31,33 @@ class WebTest_Training_MyTest extends CiviSeleniumTestCase {
     parent::setUp();
   }
 
-  function testTraining() {
+  function testBlocksDisplayedPerSettings() {
     $this->webtestLogin();
 
-    // go to display preferences to enable Open ID field
     $this->openCiviPage('training/settings', "reset=1", "_qf_Setting_submit");
 
-    $this->click("display_membership");
-
+    if(!$this->isChecked("display_membership")) {
+      $this->click("display_membership");
+    }
+    if(!$this->isChecked("display_contribution_total")) {
+      $this->click("display_contribution_total");
+    }
     // Clicking save.
     $this->click("_qf_Setting_submit");
 
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $this->waitForText('crm-notification-container', "Training settings saved");
+
+    // find contributions
+    $this->openCiviPage('member/search', 'reset=1', '_qf_Search_refresh');
+    $this->click("_qf_Search_refresh");
+
+    $this->waitForElementPresent("_qf_Search_next_print");
+    $this->click("xpath=//div[@id='memberSearch']/table/tbody/tr/td[3]/a");
+    $this->waitForTextPresent("Employer");
+
+    $this->assertElementContainsText("xpath=//div[@id='custom-contributions']/h3", 'Contribution Summary');
+    $this->assertElementContainsText("xpath=//div[@id='custom-memberships']/h3", 'Memberships');
   }
 }
 

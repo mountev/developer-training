@@ -17,17 +17,31 @@ class CRM_Training_MyTest extends CiviUnitTestCase {
     parent::tearDown();
   }
 
-  /**
-   * Test that 1^2 == 1
-   */
-  function testSquareOfOne() {
-    $this->assertEquals(1, 1*1);
+  function testUpdateSettingsTrue() {
+    $params = array(
+      'display_membership' => 1,
+      'display_contribution_total' => 1,
+    );
+    CRM_Training_Form_Setting::updateSettings($params);
+
+    $isMemBlock = CRM_Core_DAO::singleValueQuery("SELECT value FROM civicrm_training_settings WHERE name = 'display_membership'");
+    $this->assertEquals(1, $isMemBlock);
+
+    $isContribBlock = CRM_Core_DAO::singleValueQuery("SELECT value FROM civicrm_training_settings WHERE name = 'display_contribution_total'");
+    $this->assertEquals(1, $isContribBlock);
   }
 
-  /**
-   * Test that 8^2 == 64
-   */
-  function testSquareOfEight() {
-    $this->assertEquals(64, 8*8);
+  function testUpdateSettingsFalse() {
+    $params = array(
+      'display_membership' => 0,
+      'display_contribution_total' => 0,
+    );
+    CRM_Training_Form_Setting::updateSettings($params);
+
+    $isMemBlock = CRM_Core_DAO::singleValueQuery("SELECT value FROM civicrm_training_settings WHERE name = 'display_membership'");
+    $this->assertEquals(0, $isMemBlock);
+
+    $isContribBlock = CRM_Core_DAO::singleValueQuery("SELECT value FROM civicrm_training_settings WHERE name = 'display_contribution_total'");
+    $this->assertEquals(0, $isContribBlock);
   }
 }
