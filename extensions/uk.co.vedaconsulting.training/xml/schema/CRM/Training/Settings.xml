@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Training</base>
+  <class>Settings</class>
+  <name>civicrm_training_settings</name>
+  <comment>Training settings table</comment>
+  <log>true</log>
+
+  <field>
+    <name>id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>Unique Settings ID</comment>
+  </field>
+  <primaryKey>
+    <name>id</name>
+    <autoincrement>true</autoincrement>
+  </primaryKey>
+
+  <field>
+    <name>name</name>
+    <type>varchar</type>
+    <length>256</length>
+    <comment>unique name for setting</comment>
+    <title>Setting Name</title>
+    <unique>true</unique>
+  </field>
+
+  <field>
+    <name>value</name>
+    <type>varchar</type>
+    <length>256</length>
+    <comment>data associated with setting</comment>
+    <title>Setting Value</title>
+  </field>
+</table>
