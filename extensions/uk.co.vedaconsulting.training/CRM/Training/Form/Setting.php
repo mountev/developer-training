@@ -67,18 +67,13 @@ class CRM_Training_Form_Setting extends CRM_Core_Form {
   }
 
   static function updateSettingsWithDAO($params) {
-    $dao = new CRM_Training_DAO_Settings();
-    $dao->name  = 'display_membership';
-    $dao->find(TRUE);
-    $dao->value = (int) CRM_Utils_Array::value('display_membership', $params);
-    $dao->save();
+    foreach (array('display_membership', 'display_contribution_total') as $field) {
+      $daoParam = array();
+      $daoParam['name'] = $field;
+      $daoParam['value'] = (int) CRM_Utils_Array::value($field, $params);
+      CRM_Training_BAO_Settings::create($daoParam);
+    }
 
-    $dao = new CRM_Training_DAO_Settings();
-    $dao->name  = 'display_contribution_total';
-    $dao->find(TRUE);
-    $dao->value = (int) CRM_Utils_Array::value('display_contribution_total', $params);
-    $dao->save();
-
-    return true;
+    return TRUE;
   }
 }
