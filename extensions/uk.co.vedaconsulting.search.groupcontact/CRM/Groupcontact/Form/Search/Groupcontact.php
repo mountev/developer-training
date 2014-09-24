@@ -8,6 +8,13 @@ class CRM_Groupcontact_Form_Search_Groupcontact extends CRM_Contact_Form_Search_
     parent::__construct($formValues);
   }
 
+  function preProcess() {
+    if (!CRM_Core_Permission::check('access custom search form')) {
+        CRM_Utils_System::permissionDenied();
+        CRM_Utils_System::civiExit();
+      }
+  }
+
   /**
    * Prepare a set of search fields
    *
@@ -163,9 +170,11 @@ class CRM_Groupcontact_Form_Search_Groupcontact extends CRM_Contact_Form_Search_
     #Group end
 
     #status
-    $oGroupContact  = new CRM_Contact_DAO_GroupContact;
+    /*$oGroupContact  = new CRM_Contact_DAO_GroupContact;
     $aGroupFields   = $oGroupContact->fields();
-    $aStatus        = explode(', ', $aGroupFields['status']['enumValues']);
+    $aStatus        = explode(', ', $aGroupFields['status']['enumValues']);*/
+
+    $aStatus = CRM_Core_SelectValues::groupContactStatus();
     $temp           = array();
     foreach($aStatus as $status){
       $aSelectedStatus = CRM_Utils_Array::value( $status, $this->_formValues );

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<extension key="uk.co.vedaconsulting.contributiondetailreport" type="report">
+  <file>contributiondetailreport</file>
+  <name>Custom Contribution Details Report</name>
+  <description>Custom Contribution Details Report</description>
+  <license>AGPL</license>
+  <maintainer>
+    <author>Veda</author>
+    <email>support@vedaconsulting.co.uk</email>
+  </maintainer>
+  <releaseDate>2014-09-24</releaseDate>
+  <version>1.0</version>
+  <develStage>alpha</develStage>
+  <compatibility>
+    <ver>4.2</ver>
+  </compatibility>
+  <comments>Alpha 1</comments>
+  <civix/>
+  <typeInfo>
+    <component>CiviContribute</component>
+    <reportUrl>uk.co.vedaconsulting.contributiondetailreport</reportUrl>
+  </typeInfo>
+</extension>

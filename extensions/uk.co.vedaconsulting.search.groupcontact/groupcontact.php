@@ -106,3 +106,9 @@ function groupcontact_civicrm_caseTypes(&$caseTypes) {
 function groupcontact_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
   _groupcontact_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
+
+
+function groupcontact_civicrm_permission(&$permissions) {
+  $prefix = ts('CiviCRM Custom Search') . ': '; // name of extension or module
+  $permissions['access custom search form'] = $prefix . ts('access custom search form');
+}
