@@ -49,12 +49,12 @@ class CRM_Training_Form_Setting extends CRM_Core_Form {
   public function postProcess() {
     $params = $this->controller->exportValues($this->_name);    
 
-    if (self::updateSettings($params)) {
+    if (self::updateSettingsWithDAO($params)) {
       CRM_Core_Session::setStatus(ts('Training settings saved.'));
     }
   }
 
-  static function updateSettings($params) {
+  static function updateSettingsWithoutDAO($params) {
     $sql = "INSERT into civicrm_training_settings (name, value) VALUES (%1, %2), (%3, %4) ON DUPLICATE KEY UPDATE value = VALUES(value)";
     $sparams = array(
       1 => array('display_membership', 'String'),
@@ -63,6 +63,22 @@ class CRM_Training_Form_Setting extends CRM_Core_Form {
       4 => array((int) CRM_Utils_Array::value('display_contribution_total', $params), 'Integer')
     ); 
     CRM_Core_DAO::executeQuery($sql, $sparams);
+    return true;
+  }
+
+  static function updateSettingsWithDAO($params) {
+    $dao = new CRM_Training_DAO_Settings();
+    $dao->name  = 'display_membership';
+    $dao->find(TRUE);
+    $dao->value = (int) CRM_Utils_Array::value('display_membership', $params);
+    $dao->save();
+
+    $dao = new CRM_Training_DAO_Settings();
+    $dao->name  = 'display_contribution_total';
+    $dao->find(TRUE);
+    $dao->value = (int) CRM_Utils_Array::value('display_contribution_total', $params);
+    $dao->save();
+
     return true;
   }
 }
