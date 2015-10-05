@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.5                                                |
+ | CiviCRM version 4.6                                                |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2014                                |
+ | Copyright CiviCRM LLC (c) 2004-2015                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -24,7 +24,6 @@
  +--------------------------------------------------------------------+
 *}
 {* Contact Summary template for new tabbed interface. Replaces Basic.tpl *}
-<h1>Hello</h1>
 {if $action eq 2}
   {include file="CRM/Contact/Form/Contact.tpl"}
 {else}
@@ -60,7 +59,7 @@
             <li>
               {assign var='editParams' value=$urlParams|cat:"&action=update&cid=$contactId"}
               <a href="{crmURL p='civicrm/contact/add' q=$editParams}" class="edit button" title="{ts}Edit{/ts}">
-              <span><div class="icon edit-icon"></div>{ts}Edit{/ts}</span>
+              <span><div class="icon ui-icon-pencil"></div>{ts}Edit{/ts}</span>
               </a>
             </li>
           {/if}
@@ -102,7 +101,7 @@
             {assign var='viewParams' value=$urlParams|cat:"&cid=$nextContactID"}
             <li class="crm-next-action">
               <a href="{crmURL p='civicrm/contact/view' q=$viewParams}" class="view button" title="{$nextContactName}">
-                <span title="{$nextContactName}"><div class="icon next-icon"></div>{ts}Next{/ts}</span>
+                <span title="{$nextContactName}"><div class="icon ui-icon-carat-1-e"></div>{ts}Next{/ts}</span>
               </a>
             </li>
           {/if}
@@ -110,7 +109,7 @@
             {assign var='viewParams' value=$urlParams|cat:"&cid=$prevContactID"}
             <li class="crm-previous-action">
               <a href="{crmURL p='civicrm/contact/view' q=$viewParams}" class="view button" title="{$prevContactName}">
-                <span title="{$prevContactName}"><div class="icon previous-icon"></div>{ts}Previous{/ts}</span>
+                <span title="{$prevContactName}"><div class="icon ui-icon-carat-1-w"></div>{ts}Previous{/ts}</span>
               </a>
             </li>
           {/if}
@@ -148,7 +147,6 @@
       </ul>
 
       <div id="contact-summary" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-
         {* Display Contributions *}
         <div id="custom-contributions">
           <h3>Contribution Summary</h3>
