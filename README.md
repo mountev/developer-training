@@ -1,8 +1,8 @@
 Training Resources 
 ====================
-Day1 ppt - https://docs.google.com/a/vedaconsulting.co.uk/presentation/d/1cg1pS6CY01Remg5Oich1Cw991pPgUXSFmL4pxgm03o4/edit?usp=sharing
+Day1 ppt - https://docs.google.com/presentation/d/1lUQYsyfnEbN9zzKGf8GryfgKPgx78toW6QkWjenVjZU/edit#slide=id.p
 
-Day2 ppt - https://docs.google.com/a/vedaconsulting.co.uk/presentation/d/1pcbgnU_qP55Pg4T8W2L7_m2tveA9Bpipc8nsthh3ttQ/edit?usp=sharing
+Day2 ppt - https://docs.google.com/presentation/d/1B3X-zkaUfdft5hgSYzBQ9xxYfGQuxW0kcbC56aXUHCk/edit#slide=id.p
 
 Extension Installation -
 http://wiki.civicrm.org/confluence/display/CRMDOC/Create+an+Extension
